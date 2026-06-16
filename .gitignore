@@ -216,3 +216,4 @@ healthchecksdb
 FakesAssemblies/
 __pycache__/
 *.pyc
+/Javelin.API/appsettings.Development.json
