@@ -2,6 +2,6 @@
 {
     public interface IProducer
     {
-        Task produce(string topicName);
+        Task Produce(string topicName);
     }
 }

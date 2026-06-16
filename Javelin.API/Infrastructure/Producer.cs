@@ -6,7 +6,8 @@ namespace Javelin.API.Infrastructure
     public class Producer : IProducer
     {
         private readonly ProducerConfig _producerConfig;
-        public Producer(ProducerConfig producerConfig, AppConfig appConfig)
+
+        public Producer(AppConfig appConfig)
         {
             _producerConfig = new()
             {
@@ -15,7 +16,7 @@ namespace Javelin.API.Infrastructure
             };
         }
 
-        public async Task produce(string topicName)
+        public async Task Produce(string topicName)
         {
             using (var producer = new ProducerBuilder<string, string>(_producerConfig).Build())
             {

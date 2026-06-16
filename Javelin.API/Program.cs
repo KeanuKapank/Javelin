@@ -1,6 +1,7 @@
 
 using Javelin.API.Configurations.Exstentions;
 using Javelin.API.Configurations.Models;
+using Scalar.AspNetCore;
 
 namespace Javelin.API
 {
@@ -21,6 +22,7 @@ namespace Javelin.API
             builder.Configuration.GetSection("AppConfig").Bind(appConfig);
             builder.Services.AddSingleton(appConfig);
 
+            //Kafka Service
             builder.Services.ConfigureKafkaServices();
 
             var app = builder.Build();
@@ -29,12 +31,12 @@ namespace Javelin.API
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.MapScalarApiReference();
             }
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
