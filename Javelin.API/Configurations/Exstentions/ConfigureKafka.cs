@@ -1,6 +1,4 @@
-﻿using Confluent.Kafka;
-using Javelin.API.Configurations.Models;
-using Javelin.API.Infrastructure;
+﻿using Javelin.API.Infrastructure;
 
 namespace Javelin.API.Configurations.Exstentions
 {
