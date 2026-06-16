@@ -1,4 +1,5 @@
 
+using Asp.Versioning;
 using Javelin.API.Configurations.Exstentions;
 using Javelin.API.Configurations.Models;
 using Scalar.AspNetCore;
@@ -15,8 +16,13 @@ namespace Javelin.API
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            builder.Services.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+            });
             builder.Services.AddOpenApi();
-
 
             AppConfig appConfig = new();
             builder.Configuration.GetSection("AppConfig").Bind(appConfig);
