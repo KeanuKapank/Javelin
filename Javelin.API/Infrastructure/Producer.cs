@@ -6,15 +6,17 @@ namespace Javelin.API.Infrastructure
 {
     public class Producer : IProducer
     {
+        private readonly ILogger<Producer> _logger;
         private readonly ProducerConfig _producerConfig;
 
-        public Producer(AppConfig appConfig)
+        public Producer(AppConfig appConfig, ILogger<Producer> logger)
         {
             _producerConfig = new()
             {
                 BootstrapServers = appConfig.Kafka.BootstrapServers,
                 Acks = Acks.All
             };
+            _logger = logger;
         }
 
         public async Task Produce(string topicName, UILogAction action)
@@ -28,17 +30,16 @@ namespace Javelin.API.Infrastructure
                     {
                         if (deliveryReport.Error.Code != ErrorCode.NoError)
                         {
-                            Console.WriteLine($"Failed to deliver message: {deliveryReport.Error.Reason}");
+                            _logger.LogError("Failed to deliver message: {Reason}", deliveryReport.Error.Reason);
                         }
                         else
                         {
-                            Console.WriteLine($"Produced event to topic {topicName}: value = {action}");
+                            _logger.LogInformation("Produced event to topic - {topicName}. Value: {@Value}", topicName, action);
                         }
                     });
                 
-
                 producer.Flush(TimeSpan.FromSeconds(10));
-                Console.WriteLine($"Message were produced to topic {topicName}");
+                _logger.LogInformation($"Message were produced to topic {topicName}");
             }
         }
 
@@ -53,17 +54,17 @@ namespace Javelin.API.Infrastructure
                     {
                         if (deliveryReport.Error.Code != ErrorCode.NoError)
                         {
-                            Console.WriteLine($"Failed to deliver message: {deliveryReport.Error.Reason}");
+                            _logger.LogError("Failed to deliver message: {Reason}", deliveryReport.Error.Reason);
                         }
                         else
                         {
-                            Console.WriteLine($"Produced event to topic {topicName}: value = {action}");
+                            _logger.LogInformation("Produced event to topic - {topicName}. Value: {@Value}", topicName, action);
                         }
                     });
 
 
                 producer.Flush(TimeSpan.FromSeconds(10));
-                Console.WriteLine($"Message were produced to topic {topicName}");
+                _logger.LogInformation($"Message were produced to topic {topicName}");
             }
         }
 
@@ -78,17 +79,17 @@ namespace Javelin.API.Infrastructure
                     {
                         if (deliveryReport.Error.Code != ErrorCode.NoError)
                         {
-                            Console.WriteLine($"Failed to deliver message: {deliveryReport.Error.Reason}");
+                            _logger.LogError("Failed to deliver message: {Reason}", deliveryReport.Error.Reason);
                         }
                         else
                         {
-                            Console.WriteLine($"Produced event to topic {topicName}: value = {action}");
+                            _logger.LogInformation("Produced event to topic - {topicName}. Value: {@Value}", topicName, action);
                         }
                     });
 
 
                 producer.Flush(TimeSpan.FromSeconds(10));
-                Console.WriteLine($"Message were produced to topic {topicName}");
+                _logger.LogInformation($"Message were produced to topic {topicName}");
             }
         }
     }
