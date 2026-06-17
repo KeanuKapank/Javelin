@@ -36,5 +36,19 @@ services:
     ports:
       - "9021:9021"
 
+  api:
+    container_name: api
+    build:
+      context: ./Javelin.API
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_HTTP_PORTS: 8080
+      AppConfig__Kafka__BootstrapServers: "kafka:29092"
+    depends_on:
+      - kafka
+
 volumes:
   kafka_kraft:
