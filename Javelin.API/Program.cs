@@ -3,6 +3,7 @@ using Asp.Versioning;
 using Javelin.API.Configurations.Exstentions;
 using Javelin.API.Configurations.Models;
 using Scalar.AspNetCore;
+using Serilog;
 
 namespace Javelin.API
 {
@@ -13,6 +14,9 @@ namespace Javelin.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            // Serilog
+            builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+                loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
